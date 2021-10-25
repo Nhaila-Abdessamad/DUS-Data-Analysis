@@ -1,0 +1,3828 @@
+\documentclass[12pt]{extreport}
+
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3} 
+\usepackage{verbatim}
+\usepackage{arabtex}
+
+\usepackage{utf8}
+\setcode{utf8}
+\usepackage{lipsum}
+\usepackage[margin=2.25cm, left=2.25cm, includefoot]{geometry}
+\usepackage{comment}
+\usepackage{graphicx}
+\graphicspath{ {figures/} }
+\usepackage{array}
+\usepackage{float}
+\usepackage{fancyhdr}
+
+\usepackage{glossaries}
+\makeglossaries
+%\renewcommand{\footrulewidth}{2pt}
+%\renewcommand{\headrulewidth}{2pt}
+
+
+
+\begin{document}
+
+\begin{titlepage}
+	
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Overleaf}
+\lhead{Guides and tutorials}
+
+
+\begin{center}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/inpt.png}
+	\label{fig:81}
+\end{figure}
+
+\textsc{\large GRADUATION PROJECT TO OBTAIN THE ENGINEERING DIPLOMA IN TELECOMMUNICATIONS AND INFORMATION TECHNOLOGY  }\\
+
+\line(1,0){400}\\
+[0.25in]
+\Large{\bfseries Analysis and evaluation of the INPT Pedagogical system performance in the digital age using statistical learning techniques }\\
+[2mm]
+\line(1,0){350}\\
+[1.5cm]
+
+\end{center}
+
+
+\begin{flushleft}
+	\begin{flushleft}
+		\textsc{\LARGE Jury: }\\
+	\end{flushleft}	
+\textsc{\large Mr.EN-NOUAARY Abdeslam }\\
+\textsc{\large Ms.ELASRI IKRAM}\\
+\textsc{\large Ms.RADGUI AMINA }\\
+\textsc{\large Mr.KANDOUSSI EL MEHDI}\\
+\end{flushleft}
+
+\begin{flushright}	
+	\textsc{\large Made By :{} {} {} {} {} {}  {} {} }\\	
+	\textsc{Nhaila Abdessamad }\\
+	\textsc{\large Date : {} {} {} {} {} {} {} {} {} {} {}  {}}\\	
+	\textsc{18-10-2018 {} {} {} {} {} {} {} {} {} {} {} {} {} {}}\\	
+\end{flushright}
+
+\end{titlepage}
+
+
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\textsc{\LARGE Acknowledgment}\\
+[1.5cm]
+\end{center}
+
+\large A tremendous honor I sense, as I am typing these words, to express my sincere thanks and gratitude to everyone, from near or far who supported me during this project.\\
+
+I express my deep gratitude and sincere thanks to:\\
+
+My supervisor at SEEDS and my three years professor and Mentor Mr. EN-NOUAARY ABDESLAM: Your love for students of the distributed and ubiquitous systems branch, your competence and your sense of duty impressed me enormously. May this work be the testimony of my respect for you and my deep admiration for all your technical and personal qualities.\\
+
+Ms. ELASRI IKRAM: I would like to thank you for your humility and your genuine advises, and for ensuring that I am on schedule to complete my project. The class you thought us has been of great help in this project and for that I am infinitely thankful.\\
+
+Ms. RADGUI AMINA and Mr. KANDOUSSI EL MEHDI for graciously accepting to rate my work.\\
+
+Furthermore, I would like to express my thanks to all my professors and INPT staffs who ensured a smooth three years engineering experience in INPT.
+
+
+
+
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\textsc{\LARGE Abstract}\\
+[1.5cm]
+\end{center}
+
+\large This report is the work that has been carried out during the period of the final project internship with SEEDS INPT. The mission during the six months of the internship consisted of collecting the data of the first generation of UDS students during the three years training In INPT, Than Analysing It detect any existing patterns.\\
+
+
+three years ago INPT Created seven new branches, one of them is UDS, the purpose of this project is analyzing the data of this branch and see if there is any useful conclusions.\\
+
+
+Analyzing Data is both important for understanding how a system is doing and on finding potential ways on ameliorating it.
+
+
+
+
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\textsc{\LARGE Resume}\\
+[1.5cm]
+\end{center}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=180mm]{./FIGS/2.png}
+	\label{fig:012}
+\end{figure}
+
+\begin{comment}
+
+
+\large Ce rapport est le fruit du travail réalisé pendant la période du stage de fin d'études avec SEEDS INPT. La mission au cours des six mois du stage consistait à collecter les données de la première génération d'étudiants UDS pendant les trois années de formation à l'INPT, puis à les analyser pour détecter tout modèle existant.\\
+
+
+il y a trois ans, l'INPT a créé sept nouvelles branches, dont l'UDS, le but de ce projet est d'analyser les données de cette branche et de voir s'il y a des conclusions utiles.\\
+
+
+L'analyse des données est à la fois importante pour comprendre comment fonctionne un système et pour trouver des moyens potentiels de l'améliorer. 
+
+\end{comment}
+
+\newpage
+\thispagestyle{empty}
+\begin{center}
+	\textsc{\Huge Acronyms List\\[2cm]
+	}
+	
+	\begin{itemize}
+		\item SEEDS = Smart, Embedded, Enterprise \& Distributed Systems
+		\item UDS = Ubiquitous and Distributed Systems 
+		\item MEC = Module Elements Classification
+		\item EDA = Exploratory Data Analysis
+		\item UQ = Upper Quartile
+		\item UDS = Lower Quartile
+		\item IQR = Inner Quartile Range
+				
+	\end{itemize}
+\end{center} 
+
+
+
+
+
+\begin{comment}
+
+
+
+
+
+\newpage
+\newglossaryentry{latex}
+{
+	name=latex,
+	description={Is a markup language specially suited 
+		for scientific documents}
+}
+
+\newglossaryentry{maths}
+{
+	name=mathematics,
+	description={Mathematics is what mathematicians do}
+}
+\newacronym{MEC}{GCD}{Greatest Common Divisor}
+
+\newacronym{lcm}{LCM}{Least Common Multiple}
+
+\printglossary[type=\acronymtype]
+
+\printglossary
+
+%\thispagestyle{empty}
+%\begin{center}
+%\textsc{\LARGE \RL{ملخص}}
+%\end{center}
+\end{comment}
+
+\newpage
+\thispagestyle{empty}
+\listoffigures
+\cleardoublepage
+	
+
+
+
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+%\cleardoublepage
+
+%\setcounter{page}{1}
+
+
+
+\newpage
+\thispagestyle{empty}
+\begin{center}
+\textsc{\Huge General Introduction\\[2cm]
+}
+
+\end{center} 
+
+Regardless of industry, Any New Developed System  requires analysis of its output data, with the purpose of finding interesting  patterns that may lead to better decision making about how to optimize and upgrade the system.\\
+
+
+Data analysis is a process of inspecting, cleansing, transforming, and modelling data with the goal of discovering useful information, informing conclusions, and supporting decision-making. Data analysis has multiple facets and approaches, encompassing diverse techniques under a variety of names, and is used in different business, science, and social science domains. In today's business world, data analysis plays a role in making decisions more scientific and helping businesses operate more effectively.\\
+
+
+
+Furthermore, This process of data analysis is what this Graduation Memoir revolved around. Particularly analyzing the output data of the Ubiquitous and Distributed Systems accumulated by the first students generation.\\
+
+
+This report presents all the work carried out during the internship and is divided into three chapters:
+The first chapter includes the definition of the context of the project. It begins with a presentation of the host organization, the problematic, the objectives of the project as well as the methodology adopted for the conduct of the project. The second chapter includes the data collection and preparation of the generated data. It focuses on the classification of Module Elements and the creation of the corresponding data-frame. The third chapter represents the crux of the project, in it we performed the data analysis and reached the previously intended results. 
+
+\chapter{General context of the project}
+
+\section{Introduction}\label{sec:intro}
+
+This chapter aims at setting out the general context of the project by first presenting the  SEEDS research team host organization, its areas of expertise, and domains of research. Secondly, it aims to describe the project and its functional framework, the motivations and the problematic of the project as well as its objectives.
+
+ %The last section is devoted to the description of the method and the tools adopted for its conduct.
+
+\section{Host Organization}
+
+This internship was hosted by the SEEDS research team in INPT located in Rabat, the administrative capital of Morocco. INPT is one of the leading Moroccan engineering schools. it's attached to the ANRT and offers versatile training in the field of information and communication technologies. 
+
+The main mission of the INPT is to train engineers and senior executives in the field of high information and communication technologies. Supporting the changes that the telecommunications sector is experiencing today, in particular its liberalization and opening up to competition and private participation, and in order to provide the latter with highly qualified skills, it has implemented several actions revolving around three main axes:
+\begin{itemize}
+	\item A cycle of State engineers which revolves around a high-level scientific and technical training with the development of the adaptation, initiative and innovation capacities of the engineering student;
+
+	\item A doctoral school since 2012;
+
+	\item Continuous training in line with the needs of the sector.
+\end{itemize}
+
+To be able to accomplish these missions, the Institute relies on a permanent faculty of teacher-researchers and trainers, as well as on a network of temporary staff from academia and professionals from the information technology sector. In this context, it also has a set of laboratories equipped with constantly updated teaching and professional equipment, and a state-of-the-art computer network linking its various laboratories and rooms. 
+
+
+The research areas of the SEEDS team are in line with the trends of scientific research at the international level while taking into consideration the priorities and national action plans as indicated in the reports of the governments of the last ten years. In this sense, the training and applications targeted by the team revolve around the digital economy, automotive, aeronautics, smart grids, value-added services, cloud computing and big data, the internet objects, smart cities, etc. To achieve its objectives, the SEEDS team will target research projects funded by national and international organizations with local and overseas collaborators. 
+
+\section{Context}
+Tree years ago, the National Institute of Post and telecommunication Has Gone through massive
+Change in order to cope with the demands of the new digital era, this change is manifested in the
+introduction of seven New Branches, And the suspension of the old three ones, This implies the
+establishment of a new system, comprised of new modules, new teaching experience, new staff 
+recruitment...Whenever we try to implement a new system, we expect room for optimization, which in
+our case might be achieved on multiple levels, A relevant one which is The Purpose of this Project
+is the use of the data acquired during the last three years of the first generation of this new system to analyze and evaluate it, Following that, we will try to present results and recommendations that either clarify some aspect of the system or have a high chance on ameliorating its functioning.
+
+The problem we want to investigate is, where  the features associated is the following:\\
+Does the background of students have any influence 
+on there performance on the elements that prepares for the expected jobs?
+ 
+
+
+\section{Objectives}
+A natural way to solve this problem is to break it
+down into small, approachable tasks, In this case the tasks are the following:\\
+
+
+
+\begin{itemize}
+	\item Classify the module elements
+	\item Use those classes to build their corresponding data-frames
+	\item Use those data-frames to do some promising analysis on the individual classes
+	\item Extract the Conclusions 
+\end{itemize}
+ 
+
+\section{The Project planning:}
+The Project Unfolded in the following Manner:\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=180mm]{./FIGS/gant.jpg}
+	\caption{Gant Diagram of The project}
+	\label{fig:1000}
+\end{figure}
+
+
+\begin{comment}
+
+
+\begin{enumerate}
+	\item Data Preparation (2 Weeks)
+	\item Getting Machine Learning Certified (1 month and 2 weeks)
+	\item Module Elements Classification to 6 classes (2 Weeks)
+	\item Creation of The Corresponding data-frames for each class (2 Weeks)
+	\item Analysis of The 1st and 2nd Classes (3 Weeks)
+	\item Analysis of The 3rd and 4th Classes (3 Weeks)
+	\item Analysis of The 5th and 6th Classes (3 Weeks)
+		\item Extracting The conclusions (1 Weeks)
+	\item Preparing the report and presentation (1 month)
+		
+\end{enumerate}
+\end{comment}
+\section{Conclusion}
+In this chapter we presented the general context of the project by first presenting the  SEEDS research team host organization, its areas of expertise, and domains of research, we than aims described the project and its functional framework, the motivations and the problematic of the project as well as its objectives.
+
+
+\chapter{Ubiquitous and Distributed Systems Data Preparation:}
+
+\section{Introduction}
+In this chapter we will proceed in the  Data Preparation. First, we will start with Module element classification in which we batch every module element of the specialization that serves as a building block  for one of the six main expected work areas, than we perform Analysis on every element by class to figure out how the different CNC Backgrounds Perform.   
+
+\section{Module Elements Classification(MEC) Based on Significance To Expected work areas}
+
+
+In this section we Conduct the Module Elements classification(MEC), for it will be the foundation of any analysis to follow. The six expected work areas that we have are Software Engineering high level and low level, DevOps, IoT, Data and Network Administration.
+
+
+\subsection{Data}
+The following is the list of module elements that builds for the Data professions:
+
+\begin{itemize}
+
+\item SUD112: Relational Data Bases and ORM.
+\item SUD113: Object-Oriented modelization and Design.
+\item SUD141: Maths For Engineering.
+\item SUD142: Probability and Statistics.
+\item SUD241: Linear and Non-Linear Optimization.
+\item SUD242: Graph theory and scheduling.
+\item SUD423: Data centers, Services and Storage Networks. 
+\item SUD433: NoSQL Databases and ODM.
+\item SUD441: Pattern Recognition and Machine Learning.
+\item SUD442: Data Mining And warehousing.
+\item SUD443: PPP4.
+\item SUD521: Big Data Analytics using R/SCALLA/MADLIB.
+\item SUD522: Distributed Big Data Processing Using MapReduce/Hadoop/Kafka.
+
+\end{itemize}
+
+
+			
+\subsection{Devops}
+The following is the list of module elements that builds for the DevOps professions:
+
+\begin{itemize}
+\item SUD213: Virtualization Techniques.
+\item SUD511: Security In Cloud and Iot.
+\item SUD413: Continuous Development and Integration Techniques(DevOps).
+\item SUD421: Cloud computing.
+\item SUD422: Services and Applications Development in The Cloud.
+\item SUD512: Management and Planning of Cloud Strategies.
+
+\end{itemize}
+
+\subsection{IoT}
+The following is the list of module elements that builds for the IoT professions:
+
+
+\begin{itemize}
+\item SUD323: parallel and distributed algorithms.
+\item SUD333: PPP3.
+\item SUD341: Embedded and Real Time Systems.
+\item SUD342: Iot Foundations.
+\item SUD343: Wireless Sensors Network(WSN).
+\item SUD431: RFID and its applications in IoT.
+\item SUD432: IoT Technologies and Pate-forms.
+\item SUD511: Security In Cloud and IoT.
+\item SUD531: Internet of Multimedia Things (IoMT).
+\item SUD532: Virtualization for IoT(SDR, SDN, NFV, ...).
+\end{itemize}
+
+\subsection{Software Engineering}
+
+\subsubsection{High Level}
+The following is the list of module elements that builds for the High level Software Engineering professions:
+
+\begin{itemize}
+%\item SUD112: Relational Data Bases and ORM.                   %E1
+\item SUD113: Object-Oriented modelization and Design.		   %E2
+\item SUD143: PPP 1.										   %E3
+\item SUD211: Data Structures and Algorithms.                  %E4
+\item SUD212: Discrete Math.								   %E5
+\item SUD221: Systems Engineering.							   %E6
+\item SUD222: Mobile Applications Development.				   %E7
+\item SUD243: PPP 2. 										   %E8
+\item SUD311: Design patterns and Software Architectures.      %E9
+\item SUD312: Middle-wares and Distributed Architectures.      %E10
+\item SUD313: Standards of good practices of Information Systems.%E11
+\item SUD412: Web development plate-forms and frameworks.      %E12
+\item SUD433: NoSQL Databases and ODM.						   %E13
+\item SUD411: SOA and technologies of its implementation.      %E14
+\item SUD321: Mobile and Web Applications Security.			   %E15
+\end{itemize}
+
+
+\subsubsection{Low Level}
+The following is the list of module elements that builds for the Low Level Software engineering  professions:
+
+\begin{itemize}
+\item SUD121: Operating Systems.
+\item SUD111: C Programming And Algorithmic.
+\item SUD212: Discrete Math.
+\item SUD221: Systems Engineering.
+\item SUD122: Electronic Systems and Circuits.
+\item SUD232: Memories and hardware interfaces.
+\item SUD123: Microprocessors and assemblers.
+\item SUD322: Programming of OS kernels and drivers.
+
+\end{itemize}
+
+
+
+
+
+
+\subsection{Network Administration:}
+The following is the list of module elements that builds for the Network Administration professions.
+
+
+\begin{itemize}
+\item SUD131: Communication Networks:.
+\item SUD132: Coding and Information Theory.
+\item SUD133: Network interconnection.
+\item SUD231: Numerical and Analogical Communication.
+\item SUD233: Network simulation techniques:.
+\item SUD331: Mobile Networks:.	
+\end{itemize}
+
+
+\section{Creation of the sub-data frames:}
+After Creating the classes, we will first use them to prepare the data-frames on which we will do the analysis. we added the column "Filiere CNC" to each Data-Frame to serve as a group by tool for the performance in every module element.
+
+\begin{figure}[H]
+	\centering	
+	\includegraphics[width=150mm]{./FIGS/1.png}
+	\caption{The Sub Data-frames}
+	\label{fig:300}
+\end{figure}
+
+
+\section{Conclusion:}
+In this Chapter We prepared the data required to perform the analysis in the next Chapter.
+
+\chapter{Analysis on each created class:}
+
+\section{Introduction}
+In this chapter we will proceed in the statistical analysis of the Ubiquitous and Distributed Systems Data. Particularly, we will perform Analysis on every element by class to figure out how the different CNC Backgrounds Perform. 
+
+\begin{comment}
+	conbut before that an interesting way to minimize the analysis is to to identify the highly correlated features in each data frame and merge them into one.tent...
+\end{comment}
+ 
+  
+  
+%Class 1: Data.  
+\section{Analysis On the data Class:}
+This section is about the Individual Elements study of the Data Class. 
+
+ 	\subsection{look At the Data Class Data-Frame Before the correlation:}
+ 	
+This is a look at the Data Class Data-Frame:
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=150mm]{./FIGS/Class_Look/1.png}
+			\caption{The Data Class Data-frame}
+			\label{fig:3}
+		\end{figure}
+
+This is a statistical Description of the Data Class it shows all the major numbers that summarize the central tendency, dispersion and shape of a dataset distribution.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=150mm]{./FIGS/Class_Look/2.png}
+			\caption{Statistical Description Of The Data Class}
+			\label{fig:4}
+		\end{figure}
+
+\subsection{The Correlation Between Elements Performance:}
+
+The following figure represents a heat-map of the correlations between all the module elements of the Data Class Data-Frame:
+
+%Corr Heatmap
+\begin{figure}[H]
+	\centering 
+	\includegraphics[width=150mm]{./FIGS/corrs/data.png}
+	\caption{Heat-map of the Correlations Between the data Class Elements}
+	\label{fig:80}
+\end{figure}
+
+
+The following figure represents the exact correlations between all the module elements of the Data Class Data-Frame:
+%Corr Table
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/da.png}
+	\caption{Exact Correlations Between The data Class Elements}
+	\label{fig:5}
+\end{figure}
+
+
+
+\begin{comment}
+
+\begin{itemize}
+\item OBSERVATIONS:
+\end{itemize}
+-- The Correlations that surpass the threshold 0.5 in this data-frame are:
+
+
+\begin{enumerate}
+\item Cor( SUD142, SUD522 ) = 0.58
+\item Cor( SUD142, SUD443 ) = 0.56
+\item Cor( SUD142, SUD441 ) = 0.57
+\item Cor( SUD142, SUD433 ) = 0.51
+\item Cor( SUD142, SUD242 ) = 0.59
+\item Cor( SUD242, SUD521 ) = 0.57
+\item Cor( SUD433, SUD522 ) = 0.64
+\item Cor( SUD433, SUD521 ) = 0.59
+\item Cor( SUD433, SUD443 ) = 0.68
+\item Cor( SUD441, SUD521 ) = 0.62
+\item Cor( SUD441, SUD443 ) = 0.82
+\item Cor( SUD443, SUD522 ) = 0.68
+\item Cor( SUD443, SUD521 ) = 0.58
+\item Cor( SUD521, SUD522 ) = 0.54
+\end{enumerate} 
+\end{comment}
+
+
+\subsection{Individual Elements Study:}
+This sub-section is about the Individual Elements study of the DevOps Class. 
+
+%Element1:
+
+\paragraph{\large SUD112: Relational Data Bases and ORM:\\
+} 
+The Following is the EDA of the 1st Module Element in the Data Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e12.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e11.png}
+	\caption{Relational Data Bases and ORM EDA}
+	\label{fig:6}
+\end{figure}
+
+%InterPretation:
+
+\subparagraph{Interpretation of the Box-plots:\\
+}
+The numbers Below and the boxplots above show that in this element  PSI students performance is slightly better than TSI and MP students.
+% ...
+\begin{enumerate}
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17  {} {} {} {} {} {} {} {}  UQ = 14  {} {} {} {} {} {} {} Median = 13					
+		\item LQ = 11.75  {} {} {} {} {} {} {} MIN = 10  {} {} {} {} {} {} {} IQR= 14 - 11.75 = 3.25
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 18 {} {} {} {} {} {} {} {} UQ = 15.25 {} {} {} {} {} {} {} {} Median = 12.5				
+		\item LQ = 12 {} {} {} {} {} {} {} {} MIN =	11 {} {} {} {} {} {} {} {} IQR= 15.25 - 12 = 3.25
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 19 {} {} {} {} {} {} {} {} UQ = 16.5 {} {} {} {} {} {} {} {} Median = 14 
+		\item LQ = 12.5 {} {} {} {} {} {} {} {}	MIN = 11{} {} {} {} {} {} {} {} IQR = 16.5-12.5 = 4 	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:\\
+}
+This Frequency Distribution is right skewed  with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 13.81
+	\item STD = 2.63
+	\item Range = 19.5 - 10 = 9.5 
+	\item IQR = 15.37 - 12 = 3.37
+\end{enumerate}
+
+
+%Element2:
+\paragraph{\large SUD141: Maths For Engineering:\\
+}
+The Following is the EDA of the 2nd Module Element in the Data Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e22.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e21.png}
+	\caption{Maths For Engineering EDA}
+	\label{fig:7}
+\end{figure}
+
+
+%InterPretation:
+
+\subparagraph{Interpretation of the Box-plots:\\
+}
+The numbers Below and the box-plots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+
+% ...
+\begin{enumerate}
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17 {} {} {} {} {} {} {} {} UQ = 14.5 {} {} {} {} {} {} {} {} Median = 13.25				
+		\item LQ = 11 {} {} {} {} {} {} {} {} MIN =	6.5 {} {} {} {} {} {} {} {} IQR = 14.5-11 = 3.5
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 16 {} {} {} {} {} {} {} {} UQ = 12.25 {} {} {} {} {} {} {} {} Median = 11.5			
+		\item LQ = 9.5 {} {} {} {} {} {} {} {} MIN = 8 {} {} {} {} {} {} {} {} IQR = 12.25 - 9.5 = 2.75
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 14 {} {} {} {} {} {} {} {} UQ = 14 {} {} {} {} {} {} {} {} Median =14  				
+		\item LQ = 13 {} {} {} {} {} {} {} {} MIN = 13 {} {} {} {} {} {} {} {} IQR = 14-13 = 1
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:\\
+}
+This Frequency Distribution is left skewed with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 12.72
+	\item STD = 2.77
+	\item Range = 18 - 7 = 9
+	\item IQR = 14 - 11 = 3
+\end{enumerate}
+
+
+
+%Element3:
+
+\paragraph{\large SUD142: Probability and Statistics:\\
+} 
+
+The Folowing is the EDA of the 3rd Module Element in the Data Class.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e32.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e31.png}
+	\caption{Probability and Statistics EDA}
+	\label{fig:8}
+\end{figure}
+
+
+%InterPretation:
+
+\subparagraph{Interpretation of the Box-plots:\\
+}
+The numbers Below and the boxplots above show that in this element the PSI performance is slightly better than 50\% of MP students and 75\% of TSI students.
+
+% ...
+\begin{enumerate}
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 14.5 {} {} {} {} {} {} {} {} UQ = 12 {} {} {} {} {} {} {} {} Median = 11			
+		\item LQ = 10 {} {} {} {} {} {} {} {} MIN =	8 {} {} {} {} {} {} {} {} IQR = 12-10 = 2			
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 15 {} {} {} {} {} {} {} {} UQ = 13.25 {} {} {} {} {} {} {} {} Median = 12		
+		\item LQ = 10.5 {} {} {} {} {} {} {} {}	MIN = 8 {} {} {} {} {} {} {} {}  IQR = 13.25 - 10.5 = 2.75	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 13.5{} {} {} {} {} {} {} {} UQ = 11 {} {} {} {} {} {} {} {} Median = 8 				
+		\item LQ = 6 {} {} {} {} {} {} {} {} MIN = 5 {} {} {} {} {} {} {} {}  IQR = 11 - 6 = 5		
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:\\
+}
+This Frequency Distribution is a normal distribution with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 11.05
+	\item STD = 2.67
+	\item Range = 17 - 5 = 12
+	\item IQR = 12.94 - 9.5 = 3.44
+\end{enumerate}
+These numbers show us that approximately half of the students had relatively bad performances and half of them had relatively good performances and by far the most frequent Mark is 11.
+
+
+%Element4:
+\paragraph{\large SUD241: Linear and Non-Linear Optimization:\\
+} 
+The Folowing is the EDA of the 4th Module Element in the Data Class.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/el2.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/el1.png}
+	\caption{Linear and Non-Linear Optimization EDA}
+	\label{fig:9}
+\end{figure}
+
+%InterPretation:
+
+\subparagraph{Interpretation of the Box-plots:\\
+}
+The numbers Below and the boxplots above show that in this element TSI and PSI are performing slightly better than MP students, and PSI performance is slightly better than TSI's .
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 15.5 {} {} {} {} {} {} {} {} UQ = 13   {} {} {} {} {} {} {} {} Median = 12.5 
+		\item LQ = 11.5 {} {} {} {} {} {} {} {}	 MIN = 10 {} {} {} {} {} {} {} {} IQR = 13 - 11.5 = 1.5
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 16 {} {} {} {} {} {} {} {} UQ = 15 {} {} {} {} {} {} {} {} Median = 13
+		\item LQ = 12 {} {} {} {} {} {} {} {}	MIN = 11.5 {} {} {} {} {} {} {} {} IQR = 15 - 12 = 3	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 15 {} {} {} {} {} {} {} {} UQ = 14 {} {} {} {} {} {} {} {} Median = 12.5 				
+		\item LQ = 11.75 {} {} {} {} {} {} {} {} MIN =	10.5 {} {} {} {} {} {} {} {} IQR = 14 - 11.75 = 2.25			
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:\\
+}
+This Frequency Distribution is right skewed with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 13.13
+	\item STD = 2.01
+	\item Range = 17.5 - 10 = 7.5
+	\item IQR = 14.37 - 11.62 = 3.25
+\end{enumerate}
+
+
+%Element5:
+
+\paragraph{\large SUD242: Graph theory and scheduling:\\
+}
+The Folowing is the EDA of the 5th Module Element in the Data Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e42.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e41.png}
+	\caption{Graph theory and scheduling EDA}
+	\label{fig:10}
+\end{figure}
+
+%Interpretation
+
+
+
+
+
+
+\begin{comment}
+
+\subparagraph{Interpretation of the Box-plots:\\
+}
+
+
+\begin{comment}
+
+
+The numbers Below and the boxplots above show that 75\%  of TSI performance is roughly equivalent
+and that their performance is almost better than half of the MP students.
+
+% ...
+\begin{enumerate}
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17 {} {} {} {} {} {} {} {} UQ = 13.5 {} {} {} {} {} {} {} {} Median = 10.5 				
+		\item LQ = 8 {} {} {} {} {} {} {} {} MIN = 4 {} {} {} {} {} {} {} {} IQR = 13.5 - 8 = 5.5	
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17.5 {} {} {} {} {} {} {} {} UQ = 17 {} {} {} {} {} {} {} {} Median = 16 				
+		\item LQ = 11.5 {} {} {} {} {} {} {} {} MIN = 7 {} {} {} {} {} {} {} {} IQR = 17 - 11 = 6		
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 13 {} {} {} {} {} {} {} {} UQ = 10 {} {} {} {} {} {} {} {} Median = 6		
+		\item LQ = 6 {} {} {} {} {} {} {} {} MIN = 5 {} {} {} {} {} {} {} {} IQR = 10 - 6 = 4		
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 11.13
+	\item STD = 4.03
+	\item Range = 17.5 - 4 = 13.5
+	\item IQR = 14.88 - 7.63 = 7.25
+\end{enumerate}
+\end{comment}
+%Element6:
+
+\paragraph{\large SUD423: Data centers, Services and Storage Networks:\\
+} 
+The Following is the analysis of the 6th Module Element in the Data Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e52.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e51.png}
+	\caption{Data centers, Services and Storage Networks EDA}
+	\label{fig:11}
+\end{figure}
+
+%Interpretation
+
+%InterPretation:
+
+\begin{comment}
+
+\subparagraph{Interpretation of the Box-plots:}
+
+The numbers Below and the boxplots above show that in this element  PSI and TSI students performance is roughly equivalent
+and that their performance is almost better than half of the MP students.
+
+% ...
+\begin{enumerate}
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 15.5 {} {} {} {} {} {} {} {} UQ = 15 {} {} {} {} {} {} {} {} Median = 14			
+		\item LQ = 13 {} {} {} {} {} {} {} {} MIN =	12.5 {} {} {} {} {} {} {} {} IQR = 15 - 13 = 2	
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 15.5 {} {} {} {} {} {} {} {} UQ = 15 {} {} {} {} {} {} {} {} Median = 12.5			
+		\item LQ = 13 {} {} {} {} {} {} {} {} MIN =	12.5 {} {} {} {} {} {} {} {} IQR = 15 - 12.5 = 2.5	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 15.5 {} {} {} {} {} {} {} {} UQ = 15 {} {} {} {} {} {} {} {} Median = 13.5		
+		\item LQ = 13 {} {} {} {} {} {} {} {} MIN =	13 {} {} {} {} {} {} {} {} IQR = 15 - 13 = 2	
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+
+\begin{enumerate}
+	\item Mean = a
+	\item STD = 1.13
+	\item Range = 15.5 - 12.5 = 3
+	\item IQR = 15 - 13 = 2 
+\end{enumerate}
+\end{comment}
+
+%Element7:
+\paragraph{\large SUD433: NoSQL Databases and ODM:\\
+}
+The Folowing is the analysis of the 7th Module Element in the Data Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e62.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e61.png}
+	\caption{NoSQL Databases and ODM EDA}
+	\label{fig:12}
+\end{figure}
+
+%Interpretation
+
+\begin{comment}
+
+
+
+\subparagraph{Interpretation of the Box-plots:}
+
+The numbers Below and the boxplots above show that in this element  PSI and TSI students performance is roughly equivalent
+and that their performance is almost better than half of the MP students.
+
+
+
+% ...
+\begin{enumerate}
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 20 {} {} {} {} {} {} {} {} UQ = 19 {} {} {} {} {} {} {} {} Median = 17	
+		\item LQ = 12 {} {} {} {} {} {} {} {} MIN =	10 {} {} {} {} {} {} {} {} IQR = 19 - 12 = 5	
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 20 {} {} {} {} {} {} {} {} UQ = 20 {} {} {} {} {} {} {} {} Median = 20			
+		\item LQ = 15.5 {} {} {} {} {} {} {} {} MIN = 10.5
+		{} {} {} {} {} {} {} {} IQR = a-b = c		
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 20 {} {} {} {} {} {} {} {} UQ = 17 {} {} {} {} {} {} {} {} Median = 13.5	
+		\item LQ = 12 {} {} {} {} {} {} {} {} MIN =	10.5 {} {} {} {} {} {} {} {} IQR = 17 - 12 = 5	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+
+\begin{enumerate}
+	\item Mean = a
+	\item STD = 3.76
+	\item Range = 20 - 10 = 10
+	\item IQR = 20 - 12.12 = 7.88
+\end{enumerate}
+\end{comment}
+
+%Element8:
+\paragraph{\large SUD441: Pattern Recognition and Machine Learning:\\
+}
+The Folowing is the analysis of the 8th Module Element in the Data Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e72.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e71.png}
+	\caption{Pattern Recognition and Machine Learning EDA}
+	\label{fig:13}
+\end{figure}
+
+%InterPretation:
+
+\begin{comment}
+
+
+\subparagraph{Interpretation of the Box-plots:}
+
+The numbers Below and the boxplots above show that in this element  PSI and TSI students performance is roughly equivalent
+and that their performance is almost better than half of the MP students.
+
+% ...
+\begin{enumerate}
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17 {} {} {} {} {} {} {} {} UQ = 16.25 {} {} {} {} {} {} {} {} Median = 16
+		\item LQ = 15.5 {} {} {} {} {} {} {} {} MIN = 15 {} {} {} {} {} {} {} {} IQR = 16.26 - 15.5 = 0.75	
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17 {} {} {} {} {} {} {} {} UQ = 16.25 {} {} {} {} {} {} {} {} Median = 16	
+		\item LQ = 15.75 {} {} {} {} {} {} {} {} MIN = 15 {} {} {} {} {} {} {} {} IQR = 16.25 - 15.75 = 0.5	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 16 {} {} {} {} {} {} {} {} UQ = 15.5 {} {} {} {} {} {} {} {} Median = 15	
+		\item LQ = 12.5 {} {} {} {} {} {} {} {}  MIN = 11 {} {} {} {} {} {} {} {} IQR = 15.5 - 12.5 = 3
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+
+\begin{enumerate}
+	\item Mean = a
+	\item STD = 1.41
+	\item Range = 17-11 = 6
+	\item IQR = 16-15 = 1 
+\end{enumerate}
+\end{comment}
+
+
+%Element9:
+\paragraph{\large SUD442: Data Mining And warehousing:\\
+}
+The Folowing is the analysis of the 9th Module Element in the Data Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e82.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e81.png}
+	\caption{Data Mining And warehousing EDA}
+	\label{fig:14}
+\end{figure}
+
+%Interpretation
+\begin{comment}
+
+The numbers Below and the boxplots above show that in this element  PSI and TSI students performance is roughly equivalent
+and that their performance is almost better than half of the MP students.
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 18.5 {} {} {} {} {} {} {} {} UQ = 17.5 {} {} {} {} {} {} {} {} Median = 16.5		
+		\item LQ = 15 {} {} {} {} {} {} {} {} MIN =	16.5 {} {} {} {} {} {} {} {} IQR = 17.5 - 15 = 2.5	
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 18 {} {} {} {} {} {} {} {} UQ = 17.75 {} {} {} {} {} {} {} {} Median = 17.5	
+		\item LQ = 16.75 {} {} {} {} {} {} {} {} MIN =	16.5 {} {} {} {} {} {} {} {} IQR = a-b = c	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17 {} {} {} {} {} {} {} {} UQ = 15.5 {} {} {} {} {} {} {} {} Median = 15.25
+		\item LQ = 14 {} {} {} {} {} {} {} {} MIN =	12.75 {} {} {} {} {} {} {} {} IQR = 15.5 - 12.75 = 2.5
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = a
+	\item STD = 1.66
+	\item Range = 18-12 = 6
+	\item IQR = 17.5 - 14.5 = 3
+\end{enumerate}
+
+\end{comment}
+
+
+
+%Element10:
+\paragraph{\large SUD443: PPP4:}
+The Folowing is the analysis of the 10th Module Element in the Data Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e92.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e91.png}
+	\caption{PPP4 EDA}
+	\label{fig:15}
+\end{figure}
+
+
+%InterPretation:
+
+
+\begin{comment}
+
+The numbers Below and the boxplots above show that in this element  PSI and TSI students performance is roughly equivalent
+and that their performance is almost better than half of the MP students.
+
+% ...
+\begin{enumerate}
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 18.5 {} {} {} {} {} {} {} {}  UQ = 18 {} {} {} {} {} {} {} {}  Median = 17
+		\item LQ = 16 {} {} {} {} {} {} {} {}  MIN = 13 {} {} {} {} {} {} {} {} IQR = 18 - 16 = 2	
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 18.5 {} {} {} {} {} {} {} {} UQ = 18 {} {} {} {} {} {} {} {} Median = 17.25	
+		\item LQ = 15 {} {} {} {} {} {} {} {} MIN =	13 {} {} {} {} {} {} {} {} IQR = 18 - 15 = 3	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 18.5 {} {} {} {} {} {} {} {} UQ = 17 {} {} {} {} {} {} {} {} Median = 14.75		
+		\item LQ = 10.75 {} {} {} {} {} {} {} {} MIN = 10 {} {} {} {} {} {} {} {} IQR = 17 - 10.75 = 6.25
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 16.15
+	\item STD = 2.34
+	\item Range = 18.5 - 10 = 8.5
+	\item IQR = 18 - 15.5 = 2.5
+\end{enumerate}
+
+\end{comment}
+
+%Element11:
+\paragraph{\large SUD521: Big Data Analytics using R/SCALLA/MADLIB:\\
+}
+The Folowing is the analysis of the 11th Module Element in the Data Class. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e102.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e101.png}
+	\caption{Big Data Analytics using R/SCALLA/MADLIB EDA}
+	\label{fig:16}
+\end{figure}
+
+
+%InterPretation:
+
+
+\begin{comment}}
+
+The numbers Below and the boxplots above show that in this element  PSI and TSI students performance is roughly equivalent
+and that their performance is almost better than half of the MP students.
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 19 {} {} {} {} {} {} {} {} UQ = 18 {} {} {} {} {} {} {} {} Median = 15
+		\item LQ = 12.5 {} {} {} {} {} {} {} {} MIN = 11 {} {} {} {} {} {} {} {} IQR = 18 - 12.5 = 5.5
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 16 {} {} {} {} {} {} {} {} UQ = 16 {} {} {} {} {} {} {} {} Median = 16
+		\item LQ = 14.5 {} {} {} {} {} {} {} {} MIN = 14 {} {} {} {} {} {} {} {} IQR = a-b = c	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 16 {} {} {} {} {} {} {} {} UQ = 14.5 {} {} {} {} {} {} {} {} Median = 12
+		\item LQ = 11 {} {} {} {} {} {} {} {} MIN =	11 {} {} {} {} {} {} {} {} IQR = 14.5 - 11 = 3.5	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 14.5
+	\item STD = 2.88
+	\item Range = 19 - 10 = 9
+	\item IQR = 16 - 12 = 4
+\end{enumerate}
+
+
+\end{comment}
+
+
+%Element12:
+
+
+
+
+\paragraph{\large SUD522: Distributed Big Data Processing Using MapReduce/Hadoop/Kafka:\\
+} 
+The Folowing is the analysis of the 12th Module Element in the Data Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e112.png}\includegraphics[width=70mm]{./FIGS/IES/1.dataE/e111.png}
+	\caption{Distributed Big Data Processing Using MapReduce/Hadoop/Kafka EDA}
+	\label{fig:17}
+\end{figure}
+
+%Interpretation
+%InterPretation:
+
+\begin{comment}
+
+\subparagraph{Interpretation of the Box-plots:}
+
+The numbers Below and the box-plots above show that in this element  PSI and TSI students performance is roughly equivalent
+and that their performance is almost better than half of the MP students.
+% ...
+\begin{enumerate}
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 19.75 {} {} {} {} {} {} {} {} UQ = 19.5 {} {} {} {} {} {} {} {} Median = 18.5
+		\item LQ = 15.5 {} {} {} {} {} {} {} {} MIN = 12.25 IQR = 19.5 - 15.5 = 4
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 19.5 {} {} {} {} {} {} {} {} UQ = 17.75 {} {} {} {} {} {} {} {} Median = 16.75
+		\item LQ = 16.5 {} {} {} {} {} {} {} {} MIN = 15 {} {} {} {} {} {} {} {} IQR = 17.75 - 16.5 = 1.25	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 18.5 {} {} {} {} {} {} {} {} UQ = 18.25 {} {} {} {} {} {} {} {} Median = 15.5	
+		\item LQ = 12.75 {} {} {} {} {} {} {} {} MIN = 12.25 {} {} {} {} {} {} {} {} IQR = 18.25 - 12.75 = 5.5	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+
+\begin{enumerate}
+	\item Mean = a
+	\item STD = 3.76
+	\item Range = 20 - 10 = 10
+	\item IQR = 20 - 12.12 = 7.88
+\end{enumerate}
+\end{comment}
+
+
+
+\subsection{Summary:}
+during the analysis of this Data Class we analyzed Six elements through elements distributions, boxplots and correlation grouped by CNC backgrounds. Through Correlations we observed there is several negatively correlated elements, on the other hand through the EDA of the elements we observed that there is no relevant pattern that explicitly presents itself.
+
+
+%Class 2: DevOps. 
+\section{Analysis On the DevOps Class:}
+This section is about the Individual Elements study of the DevOps Class. 
+
+\subsection{A look At the DevOps elements Data-Frame:}
+
+This is a look at the DevOps Class Data-Frame:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/3.png}
+	\caption{The DevOps Class Data-frame}
+	\label{fig:18}
+\end{figure}
+
+
+This is a statistical Description of the DevOps Class it shows all the major numbers that summarize the central tendency, dispersion and shape of a datasets distribution:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/4.png}
+	\caption{Statistical Description Of The DevOps Class}
+	\label{fig:19}
+\end{figure}
+
+\subsection{The Correlation Between Elements Performance:}
+
+The following figure represents a heat-map of the correlations between all the module elements of the Data Class Data-Frame:
+%Corr Heatmap
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/devops.png}
+	\caption{HeatMap of the Correlations Between The DevOps Class Elements}
+	\label{fig:20}
+\end{figure}
+
+
+The following figure represents the exact correlations between all the module elements of the Data Class Data-Frame:
+%Corr Table
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/da.png}
+	\caption{Exact Correlations Between The DevOps Class Elements}
+	\label{fig:a}
+\end{figure}
+
+\subsection{Individual Elements Study:}
+This sub-section is about the Individual Elements study of the DevOps Class. 
+
+\paragraph{\large SUD213: Virtualization Techniques:\\
+} 
+The Folowing is the analysis of the 1st Module Element in the DevOps Class.
+%Element1:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e12.png}\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e11.png}
+	\caption{Virtualization Techniques EDA}
+	\label{fig:21}
+\end{figure}
+
+
+%InterPretation:
+
+\begin{comment}
+
+
+\subparagraph{Interpretation of the Box-plots:}
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+% ...
+\begin{enumerate}	
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 20 {} {} {} {} {} {} {} {} UQ = 18 {} {} {} {} {} {} {} {} Median = 16
+		\item LQ = 14 {} {} {} {} {} {} {} {} MIN = 10	e {} {} {} {} {} {} {} {} IQR = 18 - 14 = 4	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 15  {} {} {} {} {} {} {} {} UQ = 14 {} {} {} {} {} {} {} {} Median = 12.5
+		\item LQ = 11 {} {} {} {} {} {} {} {} MIN = 10.5 {} {} {} {} {} {} {} {} IQR = 14 - 11 = 3	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+
+\begin{enumerate}
+	\item Mean = 14.88
+	\item STD = 3.16
+	\item Range = 20 - 8.25 =  11.75
+	\item IQR = 17.5 - 12.5 = 5
+\end{enumerate}
+\end{comment}
+
+%Element2:
+
+\paragraph{\large SUD511: Security In Cloud and Iot:\\} 
+The Folowing is the analysis of the 2nd Module Element in the DevOps Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e22.png}\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e21.png}
+	\caption{Security In Cloud and Iot EDA}
+	\label{fig:22}
+\end{figure}
+
+%InterPretation:
+
+\begin{comment}
+
+
+\subparagraph{Interpretation of the Box-plots:\\}
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students. 
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 19 {} {} {} {} {} {} {} {} UQ = 18 {} {} {} {} {} {} {} {} Median = 16.5
+		\item LQ = 14 {} {} {} {} {} {} {} {}  MIN = 12 {} {} {} {} {} {} {} {}  IQR = 18 - 14 = 4
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 16.5 {} {} {} {} {} {} {} {} UQ = 16.25 {} {} {} {} {} {} {} {} Median = 16
+		\item LQ = 13.25 {} {} {} {} {} {} {} {}  MIN =	13 {} {} {} {} {} {} {} {} IQR = 16.25 - 13.25 = 3	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 16 {} {} {} {} {} {} {} {} UQ = 15 {} {} {} {} {} {} {} {} Median = 14
+		\item LQ = 13.25 {} {} {} {} {} {} {} {} MIN = 12.5 {} {} {} {} {} {} {} {} IQR = 15 - 13.25 = 1.75	
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 15.43
+	\item STD = 2.1
+	\item Range = 18.5 - 12.5 = 6
+	\item IQR = 16.5 - 13.5 = 3
+\end{enumerate}
+\end{comment}
+
+%Element3:
+
+\paragraph{\large SUD413: Continuous Development and Integration Techniques(DevOps):\\
+}
+The Folowing is the analysis of the 3rd Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e32.png}\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e31.png}
+	\caption{Continuous Development and Integration Techniques(DevOps)EDA}
+	\label{fig:23}
+\end{figure}
+
+
+%InterPretation:
+
+
+\begin{comment}
+
+
+\subparagraph{Interpretation of the Box-plots:\\
+ }
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17 {} {} {} {} {} {} {} {} UQ = 15 {} {} {} {} {} {} {} {} Median = 13
+		\item LQ = 11 {} {} {} {} {} {} {} {}  MIN = 8	 {} {} {} {} {} {} {} {}  IQR = 15 - 11 = 4
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 16 {} {} {} {} {} {} {} {} UQ = 15 {} {} {} {} {} {} {} {} Median = 14.5
+		\item LQ = 11 {} {} {} {} {} {} {} {}  MIN =	10 {} {} {} {} {} {} {} {} IQR = 15 - 11 = 4	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 16 {} {} {} {} {} {} {} {} UQ = 13 {} {} {} {} {} {} {} {} Median = 12
+		\item LQ = 11 {} {} {} {} {} {} {} {} MIN = 11 {} {} {} {} {} {} {} {} IQR = 13 - 11 = 2	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:\\
+}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 12.86
+	\item STD = 2.34
+	\item Range = 17 - 8 = 9
+	\item IQR = IQR = 15 - 11 = 4
+\end{enumerate}
+
+\end{comment}
+
+
+
+%Element4:
+
+\paragraph{\large SUD421: Cloud Computing:\\
+}
+The Folowing is the analysis of the 4th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e42.png}\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e41.png}
+	\caption{Cloud Computing EDA}
+	\label{fig:24}
+\end{figure}
+%InterPretation:
+\begin{comment}
+
+
+\subparagraph{Interpretation of the Box-plots:}
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 18 {} {} {} {} {} {} {} {} UQ = 16 {} {} {} {} {} {} {} {} Median = 15
+		\item LQ = 14 {} {} {} {} {} {} {} {}  MIN = 11	 {} {} {} {} {} {} {} {}  IQR = 16 - 14 = 2
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17 {} {} {} {} {} {} {} {} UQ = 16  {} {} {} {} {} {} {} {} Median = 15
+		\item LQ = 13.5 {} {} {} {} {} {} {} {}  MIN = 11 {} {} {} {} {} {} {} {} IQR = 16 - 13.5 = 2.5	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = 17 {} {} {} {} {} {} {} {} UQ = 16  {} {} {} {} {} {} {} {} Median = 15
+		\item LQ = 14 {} {} {} {} {} {} {} {} MIN = 13.5  {} {} {} {} {} {} {} {} IQR = 16 - 14 = 2	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 14.68
+	\item STD = 1.93
+	\item Range = 18 - 11 = 7
+	\item IQR = 16 - 14 = 2
+\end{enumerate}
+
+\end{comment}
+
+%Element5:
+
+\paragraph{\large SUD422: Services and Applications Development in The Cloud:\\
+} 
+The Folowing is the analysis of the 5th Module Element in the DevOps Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e52.png}\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e51.png}
+	\caption{Services and Applications Development in The Cloud EDA}
+	\label{fig:25}
+\end{figure}
+%InterPretation:
+
+\begin{comment}
+
+
+\subparagraph{Interpretation of the Box-plots:}
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+\begin{comment}
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 13.67
+	\item STD = 1.97
+	\item Range = 17.5 - 11 = 6.5
+	\item IQR = 15 - 12 = 3 
+\end{enumerate}
+\end{comment}
+
+%Element6:
+
+\paragraph{\large SUD512: Management and Planning of Cloud Strategies:\\
+} 
+The Folowing is the analysis of the 6th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e62.png}\includegraphics[width=70mm]{./FIGS/IES/2.devopsE/e61.png}
+	\caption{Management and Planning of Cloud Strategies EDA}
+	\label{fig:26}
+\end{figure}
+%InterPretation:
+\begin{comment}
+
+\subparagraph{Interpretation of the Box-plots:}
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+
+\begin{enumerate}
+	\item Mean = 12.51
+	\item STD = 5.99
+	\item Range = 18.5 - 0 = 18.5
+	\item IQR = 16.75 - 11.25 = 5.5
+\end{enumerate}
+
+\end{comment}
+
+\subsection{Summary:}
+during the analysis of this DevOps Class we analyzed Six elements through elements distributions, boxplots and correlation grouped by CNC backgrounds. Through Correlations we observed there is several negatively correlated elements, on the other hand through the EDA of the elements we observed that there is no relevant pattern that explicitly presents itself.
+
+
+
+
+%Class 3: IoT. 
+\section{Analysis On the IoT  Class:}
+
+This sub-section is about the Individual Elements study of the IoT Class.
+ 
+\subsection{A look At the IoT elements Data-Frame:}
+
+This is a look at the IoT Class Data-Frame
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/5.png}
+	\caption{The IoT Class Data-frame}	
+	\label{fig:27}
+\end{figure}
+
+
+This is a look at the IoT Class Data-Frame
+This is a statistical Description of the Data Class it shows all the major numbers that summarize the central tendency, dispersion and shape of a dataset distribution.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/6.png}
+	\caption{Statistical Description Of The IoT Class}
+	\label{fig:28}
+\end{figure}
+
+\subsection{The Correlation Between Elements Performance:}
+
+%Corr Heatmap
+The following figure represents a heat-map of the correlations between all the module elements of the Data Class Data-Frame:
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/iot.png}
+	\caption{HeatMap of the Correlations Between The IoT Class Elements}
+	\label{fig:29}
+\end{figure}
+
+%Corr Table
+The following figure represent the exact correlations between all the module elements of the Data Class Data-Frame:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/da.png}
+	\caption{Exact Correlations Between The IoT Class Elements}
+	\label{fig:800}
+\end{figure}
+
+\subsection{Individual Elements Study:}
+
+There Are 10 Elements:
+
+%Element1:
+
+\paragraph{\large SUD323: parallel and distributed algorithms:\\
+} The Folowing is the analysis of the 1st Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e12.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e11.png}
+	\caption{parallel and distributed algorithms EDA}
+	\label{fig:30}
+\end{figure}
+%InterPretation:
+
+
+
+For This Element
+ These numbers show us that approximately half of the students had relatively bad performances and half of them had relatively good performances and by far the most frequent Mark is 11.\\
+ 
+ The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+\end{comment}
+
+
+
+
+
+
+
+
+%Element2:
+
+\paragraph{\large SUD333: PPP3:\\
+} 
+The Folowing is the analysis of the 2nd Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e22.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e21.png}
+	\caption{PPP3 EDA}
+	\label{fig:31}
+\end{figure}
+%InterPretation:
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+
+\begin{comment}
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\end{comment}
+
+
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+These numbers show us that approximately half of the students had relatively bad performances and half of them had relatively good performances and by far the most frequent Mark is 11.
+
+%Element3:
+\paragraph{\large SUD341: Embedded and Real Time Systems:\\
+} 
+The Folowing is the analysis of the 3rd Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e32.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e31.png}
+	\caption{Embedded and Real Time Systems EDA}
+	\label{fig:32}
+\end{figure}
+%InterPretation:
+
+
+For This Element  The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+\begin{comment}
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\end{comment}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+
+%Element4:
+\paragraph{\large SUD342: Iot Foundations:} 
+The Folowing is the analysis of the 4th Module Element in the DevOps Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e42.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e41.png}
+	\caption{Iot Foundations EDA}
+	\label{fig:33}
+\end{figure}
+%InterPretation:
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\end{comment}
+
+
+
+%Element5:
+
+\paragraph{\large SUD343: Wireless Sensors Network(WSN)\\
+} 
+The Folowing is the analysis of the 5th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e52.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e51.png}
+	\caption{Wireless Sensors Network EDA}
+	\label{fig:34}
+\end{figure}
+%InterPretation:
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\end{comment}
+
+
+
+
+%Element6:
+
+\paragraph{\large SUD431: RFID and its applications in IoT:\\
+} 
+The Folowing is the analysis of the 6th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e62.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e61.png}
+	\caption{RFID and its applications in IoT EDA}
+	\label{fig:35}
+\end{figure}
+
+%InterPretation:
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+\end{comment}
+
+
+
+
+
+
+%Element7:
+
+\paragraph{\large SUD432: IoT Technologies and Pate-forms:\\
+} The Folowing is the analysis of the 7th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e72.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e71.png}
+	\caption{IoT Technologies and Pate-forms EDA}
+	\label{fig:36}
+\end{figure}
+%InterPretation:
+
+
+
+
+\begin{comment}
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\end{comment}
+
+
+
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.\\
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+
+
+%Element8:
+
+\paragraph{\large SUD511: Security In Cloud and IoT:\\
+} 
+The Folowing is the analysis of the 9th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e82.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e81.png}
+	\caption{Security In Cloud and IoT EDA}
+	\label{fig:37}
+\end{figure}
+%InterPretation:
+
+
+
+\begin{comment}
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+\end{comment}
+
+
+
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+
+
+%Element9:
+\paragraph{\large SUD531: Internet of Multimedia Things:\\
+} 
+The Folowing is the analysis of the 9th Module Element in the DevOps Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e92.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e91.png}
+	\caption{Internet of Multimedia Things EDA}
+	\label{fig:38}
+\end{figure}
+
+
+%InterPretation:
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\end{comment}
+
+
+
+
+
+
+%Element10:
+
+\paragraph{\large SUD532: Virtualization for IoT:\\
+} 
+The Folowing is the analysis of the 10th Module Element in the DevOps Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e102.png}\includegraphics[width=70mm]{./FIGS/IES/3.iotE/e101.png}
+	\caption{Virtualization for IoT}
+	\label{fig:39}
+\end{figure}
+
+%InterPretation:
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+\end{comment}
+
+
+
+
+\subsection{Summary:}
+during the analysis of this IoT Class we analyzed Six elements through elements distributions, boxplots and correlation grouped by CNC backgrounds. Through Correlations we observed there is several negatively correlated elements, on the other hand through the EDA of the elements we observed that there is no relevant pattern that explicitly presents itself.
+
+
+
+%Class 4: SHL. 
+\section{Analysis On the High level Software Engineering  Class:}
+This sub-section is about the Individual Elements study of the High Level Software Engineering Class. 
+
+\subsection{A look At the High level Software Engineering elements Data-Frame:}
+
+
+This is a look at the High Level Software Engineering Class Data-Frame:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/7.png}
+	\caption{The shl Class Data-frame}
+	\label{fig:40}
+\end{figure}
+
+This is a statistical Description of the High Level Software Engineering Class it shows all the major numbers that summarize the central tendency, dispersion and shape of a dataset distribution:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/8.png}
+	\caption{Statistical Description Of The Shl Class}
+	\label{fig:41}
+\end{figure}
+
+\subsection{The Correlation Between Elements Performance:}
+
+%Corr Heatmap
+The following figure represents a heat-map of the correlations between all the module elements of the Data Class Data-Frame:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/shl.png}
+	\caption{HeatMap of the Correlations Between The shl Class Elements}
+	\label{fig:42}
+\end{figure}
+
+%Corr Table
+The following figure represents the exact correlations between all the module elements of the Data Class Data-Frame:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/sll.png}
+	\caption{Exact Correlations Between The shl Class Elements}
+	\label{fig:43}
+\end{figure}
+
+\subsection{Individual Elements Study:}
+
+
+
+%Element1:
+
+\paragraph{\large SUD113: Object-Oriented modelization and Design:\\
+} 
+The Following is the EDA of the 1st Module Element in the DevOps Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e12.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e11.png}
+	\caption{Object-Oriented modelization and Design EDA}
+	\label{fig:44}
+\end{figure}
+
+%InterPretation:
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+%Element2:
+
+
+\paragraph{\large SUD143: PPP 1:\\
+ }
+The Folowing is the EDA of the 2nd Module Element in the DevOps Class. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e22.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e21.png}
+	\caption{PPP 1 EDA}
+	\label{fig:45}
+\end{figure}
+%InterPretation:
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+%Element3:
+
+\paragraph{\large SUD211: Data Structures and Algorithms:\\
+ }
+The Folowing is the EDA of the 3rd Module Element in the DevOps Class. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e32.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e31.png}
+	\caption{Data Structures and Algorithms EDA}
+	\label{fig:46}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+%Element4:
+
+\paragraph{\large SUD212: Discrete Math:\\
+} 
+The Folowing is the EDA of the 4th Module Element in the DevOps Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e42.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e41.png}
+	\caption{Discrete Math EDA}
+	\label{fig:47}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+%Element5:
+
+\paragraph{\large SUD221: Systems Engineering:\\
+}  
+The Folowing is the EDA of the 5th Module Element in the DevOps Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e52.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e51.png}
+	\caption{Systems Engineering EDA}
+	\label{fig:48}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+
+%Element6:
+
+\paragraph{\large SUD222: Mobile Applications Development:\\
+}  
+The Folowing is the analysis of the 6th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e62.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e61.png}
+	\caption{Mobile Applications Development EDA}
+	\label{fig:49}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+
+\end{comment}
+
+%Element8:
+
+\paragraph{\large SUD243: PPP 2:The Folowing is the analysis of the 4th Module Element in the DevOps Class.}  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e72.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e71.png}
+	\caption{PPP 2 EDA}
+	\label{fig:50}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+
+\end{comment}
+
+
+
+%Element9:
+
+\paragraph{\large SUD311: Design patterns and Software Architectures:\\
+}
+The Folowing is the analysis of the 9th Module Element in the DevOps Class.  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e82.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e81.png}
+	\caption{Design patterns and Software Architectures EDA}
+	\label{fig:51}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+%Element10:
+
+\paragraph{\large SUD312: Middle-wares and Distributed Architectures:\\
+}
+The Folowing is the analysis of the 10th Module Element in the DevOps Class.  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e92.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e91.png}
+	\label{fig:52}
+	\caption{Middle-wares and Distributed Architectures EDA}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+
+\end{comment}
+
+%Element11:
+
+\paragraph{\large SUD313: Standards of good practices of Information Systems:\\
+} 
+The Folowing is the analysis of the 1th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e102.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e101.png}
+	\caption{Standards of good practices of Information Systems EDA}
+	\label{fig:53}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+
+\end{comment}
+
+%Element12:
+
+\paragraph{\large SUD412: Web development plate-forms and frameworks:\\
+} 
+The Folowing is the analysis of the 12th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e112.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e111.png}
+	\caption{Web development plate-forms and frameworks EDA}
+	\label{fig:54}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+%Element13:
+
+\paragraph{\large SUD433: NoSQL Databases and ODM:\\
+}  
+The Folowing is the analysis of the 13th Module Element in the DevOps Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e142.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e141.png}
+	\caption{ NoSQL Databases and ODM EDA}
+	\label{fig:55}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment} 
+
+
+%Element14:
+
+\paragraph{\large SUD411: SOA and technologies of its implementation:\\
+} 
+The Folowing is the analysis of the 14th Module Element in the DevOps Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e132.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e131.png}
+	\caption{SOA and technologies of its implementation EDA}
+	\label{fig:56}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+%Element15:
+
+\paragraph{\large SUD321: Mobile and Web Applications Security:\\
+}
+The Folowing is the analysis of the 15th Module Element in the DevOps Class.  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e122.png}\includegraphics[width=70mm]{./FIGS/IES/4.shlE/e121.png}
+	\caption{Mobile and Web Applications Security EDA}
+	\label{fig:57}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+
+\end{comment}
+
+
+\subsection{Summary:}
+during the analysis of this High Level Software Engineering Class we analyzed Six elements through elements distributions, boxplots and correlation grouped by CNC backgrounds. Through Correlations we observed there is several negatively correlated elements, on the other hand through the EDA of the elements we observed that there is no relevant pattern that explicitly presents itself.
+
+
+
+%Class 5: SLL. 
+\section{Analysis On the Low Level Software Engineering  Class:}
+
+This sub-section is about the Individual Elements study of the Low Level Software Engineering Class. 
+
+\subsection{A look At the Low Level Software Engineering elements Data-Frame:}
+
+
+
+This is a look at the Data Low Level Software Engineering Data-Frame.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/7.png}
+	\caption{The Sll Class Data-frame}
+	\label{fig:1}
+\end{figure}
+
+
+
+This is a statistical Description of the Low Level Software Engineering Class it shows all the major numbers that summarize the central tendency, dispersion and shape of a dataset distribution.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/8.png}
+	\caption{Statistical Description Of The Sll Class}
+	\label{fig:58}
+\end{figure}
+
+\subsection{The Correlation Between Elements Performance:}
+
+%Corr Heatmap
+The following figure represents a heat-map of the correlations between all the module elements of the Data Class Data-Frame:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/shl.png}
+	\caption{HeatMap of the Correlations Between The sll Class Elements}
+	\label{fig:59}
+\end{figure}
+
+
+%Corr Table
+The following figure represents the exact correlations between all the module elements of the Data Class Data-Frame:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/sll.png}
+	\caption{Exact Correlations Between The sll Class Elements}
+	\label{fig:60}
+\end{figure}
+
+
+\subsection{Individual Elements Study:}
+
+%Element1:
+
+\paragraph{\large SUD121: Operating Systems:\\
+ } 
+The Folowing is the analysis of the 1st Module Element in the Low Level Software Engineering Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e12.png}\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e11.png}
+	\caption{Operating Systems EDA}
+	\label{fig:61}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+
+\end{comment}
+
+
+%Element2:
+
+\paragraph{\large SUD111: C Programming And Algorithmic:\\
+}  
+The Folowing is the analysis of the 2nd Module Element in the Low Level Software Engineering Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e22.png}\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e21.png}
+	\caption{C Programming And Algorithmic EDA}
+	\label{fig:62}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+%Element3:
+
+\paragraph{\large SUD212: Discrete Math:\\
+}  The Folowing is the analysis of the 3rd Module Element in the Low Level Software Engineering Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e32.png}\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e31.png}
+	\caption{Discrete Math EDA}
+	\label{fig:63}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+
+%Element4:
+
+\paragraph{\large SUD221: Systems Engineering:\\
+ } 
+The Folowing is the analysis of the 4th Module Element in the Low Level Software Engineering Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e42.png}\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e41.png}
+	\caption{Systems Engineering EDA}
+	\label{fig:64}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+
+%Element5:
+
+\paragraph{\large SUD122: Electronic Systems and Circuits:\\
+}  
+The Folowing is the analysis of the 5th Module Element in the Low Level Software Engineering Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e52.png}\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e51.png}
+	\caption{Electronic Systems and Circuits EDA}
+	\label{fig:65}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+
+\end{comment}
+
+
+
+
+
+
+%Element6:
+
+\paragraph{\large SUD232: Memories and hardware interfaces:\\
+} 
+The Folowing is the analysis of the 6th Module Element in the Low Level Software Engineering Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e62.png}\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e61.png}
+	\caption{Memories and hardware interfaces EDA}
+	\label{fig:66}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean =  
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a - b = c 
+\end{enumerate}
+\end{comment}
+
+
+
+
+%Element7:
+
+\paragraph{\large SUD123: Microprocessors and assemblers:\\
+}  
+The Folowing is the analysis of the 7th Module Element in the Low Level Software Engineering Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e72.png}\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e71.png}
+	\caption{ Microprocessors and assemblers EDA}
+	\label{fig:67}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+%Element8:
+
+\paragraph{\large SUD322: Programming of OS kernels and drivers:\\
+} 
+The Folowing is the analysis of the 8th Module Element in the Low Level Software Engineering Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e82.png}\includegraphics[width=70mm]{./FIGS/IES/5.sllE/e81.png}
+	\caption{Programming of OS kernels and drivers EDA}
+	\label{fig:68}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment} 
+
+
+\subsection{Summary:}
+during the analysis of this Low Level Software Engineering Class we analyzed Six elements through elements distributions, boxplots and correlation grouped by CNC backgrounds. Through Correlations we observed there is several negatively correlated elements, on the other hand through the EDA of the elements we observed that there is no relevant pattern that explicitly presents itself.
+
+%Class 6: NA. 
+\section{Analysis On the Network Administration Class:}
+This sub-section is about the Individual Elements study of the Network Administration Class. 
+
+\subsection{A look At the Network Administration elements Data-Frame:}
+
+
+This is a look at the Network Administration Class Data-Frame.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/9.png}
+	\caption{The NA Class Data-frame}
+	\label{fig:69}
+\end{figure}
+
+
+This is a statistical Description of the Network Administration Class it shows all the major numbers that summarize the central tendency, dispersion and shape of a dataset distribution.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/Class_Look/10.png}
+	\caption{Statistical Description Of The NA Class}
+	\label{fig:70}
+\end{figure}
+
+
+
+\subsection{The Correlation Between Elements Performance:}
+
+%Corr Heatmap
+The following figure represents a heat-map of the correlations between all the module elements of the Data Class Data-Frame:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/na.png}
+	\caption{HeatMap of the Correlations Between The NA Class Elements}
+	\label{fig:71}
+\end{figure}
+
+%Corr Table
+The following figure represents the exact  correlations between all the module elements of the Data Class Data-Frame:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=150mm]{./FIGS/corrs/da.png}
+	\caption{Exact Correlations Between The NA Class Elements}
+	\label{fig:b}
+\end{figure}
+
+\subsection{Individual Elements Study:}
+
+
+%Element1:
+
+\paragraph{\large SUD131: Communication Networks:\\
+} 
+The Following is the analysis of the 1st Module Element in the Network Administration Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/6.naE/e12.png}\includegraphics[width=70mm]{./FIGS/IES/6.naE/e11.png}
+	\caption{Communication Networks EDA}
+	\label{fig:72}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+
+%Element2:
+
+\paragraph{\large SUD132: Coding and Information Theory:\\
+}
+The Folowing is the analysis of the 1st Module Element in the Network Administration Class. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/6.naE/e22.png}\includegraphics[width=70mm]{./FIGS/IES/6.naE/e21.png}
+	\caption{Coding and Information Theory EDA}
+	\label{fig:73}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+
+\end{comment}
+
+
+%Element3:
+
+
+\paragraph{\large SUD133: Network interconnection:\\
+}
+The Folowing is the analysis of the 3rd Module Element in the Network Administration Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/6.naE/e32.png}\includegraphics[width=70mm]{./FIGS/IES/6.naE/e31.png}
+	\caption{Network interconnection EDA}
+	\label{fig:74}
+\end{figure}
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+%Element4:
+
+\paragraph{\large SUD231: Numerical and Analogical Communication:\\
+} 
+The Folowing is the analysis of the 4th Module Element in the Network Administration Class.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/6.naE/e42.png}\includegraphics[width=70mm]{./FIGS/IES/6.naE/e41.png}
+	\caption{Numerical and Analogical Communication EDA}
+	\label{fig:75}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+
+\begin{comment}
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+
+%Element5:
+
+\paragraph{\large SUD233: Network simulation techniques:\\
+ } 
+The Folowing is the analysis of the 5th Module Element in the Network Administration Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/6.naE/e52.png}\includegraphics[width=70mm]{./FIGS/IES/6.naE/e51.png}
+	\caption{Network simulation techniques EDA}
+	\label{fig:76}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+\begin{comment}
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+\end{comment}
+
+
+
+%Element6:
+
+\paragraph{\large SUD331: Mobile Networks:\\
+} 
+The Following is the EDA of the 6th Module Element in the Network Administration Class.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=70mm]{./FIGS/IES/6.naE/e62.png}\includegraphics[width=70mm]{./FIGS/IES/6.naE/e61.png}
+	\caption{Mobile Networks EDA}
+	\label{fig:77}
+\end{figure}
+
+The numbers Below and the boxplots above show that also in this element  TSI students performance is slightly better than PSI students and half of the MP Students.
+
+For This Element The numbers Below and the boxplots above show that in this element  PSI and MP students performance is  better than TSI.
+
+\begin{comment}
+\subparagraph{Interpretation of the Box-plots:}
+For This Element 
+
+
+% ...
+\begin{enumerate}	
+	\item The MP Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	l {} {} {} {} {} {} {} {}  IQR = e - f = g
+	\end{enumerate}
+	\item The PSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {}  MIN =	e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+	\item The TSI Class Box-Plot:
+	\begin{enumerate}
+		\item MAX = a {} {} {} {} {} {} {} {} UQ = b {} {} {} {} {} {} {} {} Median = c
+		\item LQ = d {} {} {} {} {} {} {} {} MIN = e {} {} {} {} {} {} {} {} IQR = f - g = h	
+	\end{enumerate}
+\end{enumerate}
+
+
+
+
+\subparagraph{Interpretation of the histogram:}
+This Frequency Distribution is (Skeness) with the following descriptive statistics:
+\begin{enumerate}
+	\item Mean = 
+	\item STD = 
+	\item Range = a - b = c
+	\item IQR = a-b = c 
+\end{enumerate}
+
+
+\end{comment}
+
+\subsection{Summary:}
+during the analysis of this Network Administration Class we analyzed Six elements through elements distributions, boxplots and correlation grouped by CNC backgrounds. Through Correlations we observed there is several negatively correlated elements, on the other hand through the EDA of the elements we observed that there is no relevant pattern that explicitly presents itself.
+
+
+\section{Conclusion}
+In this Chapter we performed data analysis on each class and tested our hypothesis about the CNC Background Impact student performances, following to that analysis we reached the conclusion that in order to truly test that hypothesis we need to gather more data to have equivalent samples of each background of at least 200 student. than we will have better chances of actually testing our hypothesis. 
+
+\newpage
+\thispagestyle{empty}
+\begin{center}
+	\textsc{\Huge General Conclusion and Perspectives\\[2cm]
+	}
+\end{center}
+
+
+
+The goal of this graduation project was the analysis of The First generation of Ubiquitous and distributed systems Branch data Collected through the first three years of training.\\
+
+
+Initially, we collected the three years data, we than divided the module elements into classes which allowed us to perform an individual element analysis on each class elements, Finally we reached some interesting conclusions.\\
+
+
+Professionally, It was a great opportunity that allowed me to quit my comfort zone and curiously wander into the domain of data analysis, acquire new skills and familiarize myself with new tools.\\
+
+
+Although this project was a great learning opportunity, it suffered a serious limitation, which is the shortage of data. Like any other project, this project is always a subject to improvement and evolution. while more generations pass through the new system  the true potential of such an analysis will be reached, it could also be extended to other branches.\\
+
+
+Carrying out this project in a limited time allowed me to have good training to join the professional world.
+ 
+
+
+
+
+
+\newpage
+\begin{thebibliography}{100} % 100 is a random guess of the total number of
+%references
+\bibitem{} https://towardsdatascience.com/feature-selection-correlation-and-p-value-da8921bfb3cf
+
+\bibitem{}https://medium.com/brdata/correlation-straight-to-the-point-e692ab601f4c
+
+\bibitem{} https://towardsdatascience.com/how-to-perform-exploratory-data-analysis-with-seaborn-97e3413e841d
+
+\bibitem{} 
+https://towardsdatascience.com/understanding-boxplots-5e2df7bcbd51
+
+\bibitem{} 
+https://www.cqeacademy.com/cqe-body-of-knowledge/continuous-improvement/quality-control-tools/histograms/
+
+\bibitem{} 
+https://www.wellbeingatschool.org.nz/information-sheet/understanding-and-interpreting-box-plots
+
+
+
+
+
+
+
+\end{thebibliography}
+ 
+
+
+
+
+
+
+
+
+\end{document}
